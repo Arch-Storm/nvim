@@ -1,11 +1,13 @@
 ANIME = {
-  { "02_gif.txt", 84, 25 },
-  { "02_1_gif.txt", 81, 25 },
-  { "02_2_gif.txt", 81, 25 },
-  { "02_3_gif.txt", 88, 27 },
-  { "02_4_gif.txt", 86, 27 },
-  { "02_5_gif.txt", 81, 25 },
-  { "02_6_gif.txt", 81, 25 },
+  -- { "02_gif.txt", 84, 25 },
+  -- { "02_1_gif.txt", 81, 25 },
+  -- { "02_2_gif.txt", 81, 25 },
+  -- { "02_3_gif.txt", 88, 27 },
+  -- { "02_4_gif.txt", 86, 27 },
+  -- { "02_5_gif.txt", 81, 25 },
+  -- { "02_6_gif.txt", 81, 25 },
+  -- { "coding.txt", 92, 32 },
+  { "jjk.txt", 195, 55 },
 }
 
 return {
@@ -20,7 +22,7 @@ return {
     local info = ANIME[idx]
     local path = os.getenv "LOCALAPPDATA" .. "\\nvim\\lua\\plugins\\banner\\"
 
-    dashboard.section.terminal.command = path .. "rustyAscii.exe " .. path .. info[1]
+    dashboard.section.terminal.command = path .. "rustyAscii.exe " .. path .. info[1] -- show.sh does the same thing
     dashboard.section.terminal.width = info[2]
     dashboard.section.terminal.height = info[3]
 
