@@ -53,3 +53,12 @@ opt.whichwrap:append "<>[]hl"
 
 --- Set mapleader
 g.mapleader = " "
+
+
+--- Set default terminal to powershell core
+opt.shell = vim.fn.executable('pwsh') ~= 0 and 'pwsh' or 'powershell'
+opt.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
+opt.shellredir = "2>&1 | %{ \"$\" } | Out-File %s; exit $LastExitCode"
+opt.shellpipe = "2>&1 | %{ \"$\" } | tee %s; exit $LastExitCode"
+opt.shellquote = ''
+opt.shellxquote = ''
