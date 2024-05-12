@@ -1,0 +1,12 @@
+# Hard-link to `%ROAMING%/neovide/config.toml`
+
+[font]
+normal = ["FiraCode Nerd Font Propo"]
+bold = [{family = "MonoLisa", style = "Bold"}, {family = "FiraCode Nerd Font Propo", style = "Bold"}]
+italic = [{family = "MonoLisa", style = "Normal Italic"}, {family = "FiraCode Nerd Font Propo", style = "Normal Italic"}]
+bold_italic = [{family = "MonoLisa", style = "Bold Italic"}, {family = "FiraCode Nerd Font Propo", style = "Bold Italic"}]
+size = 18
+edging = "subpixelantialias"
+
+[font.features]
+MonoLisa = ["+liga", "+frac", "+calt", "+zero", "+ss02", "+ss11", "+ss07", "+ss13", "+ss17"]

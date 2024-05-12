@@ -1,13 +1,25 @@
 ANIME = {
-  -- { "02_gif.txt", 84, 25 },
-  -- { "02_1_gif.txt", 81, 25 },
-  -- { "02_2_gif.txt", 81, 25 },
-  -- { "02_3_gif.txt", 88, 27 },
-  -- { "02_4_gif.txt", 86, 27 },
-  -- { "02_5_gif.txt", 81, 25 },
-  -- { "02_6_gif.txt", 81, 25 },
-  -- { "coding.txt", 92, 32 },
-  { "jjk.txt", 195, 55 },
+  { "demon-slayer-daki.txt", 173 },
+  { "code-geass-lelouch.txt", 174 },
+  { "demon-slayer-kyoujurou.txt", 174 },
+  { "demon-slayer-mitsuri.txt", 174 },
+  { "demon-slayer-nezuko-daki.txt", 174 },
+  { "fate-rin.txt", 173 },
+  { "jjk-gojo.txt", 160 },
+  { "mob-psycho.txt", 174 },
+  { "opm-saitama.txt", 175 },
+  { "fate-saber.txt", 174 },
+  { "fate-shirou.txt", 175 },
+  { "monogatari-araragi.txt", 175 },
+  { "monogatari-kaiki.txt", 175 },
+  { "monogatari-ougi.txt", 160 },
+  { "monogatari-ougi-araragi.txt", 175 },
+  { "monogatari-shinobu-araragi.txt", 227 },
+  { "death-note-l.txt", 147 },
+  { "death-note-light.txt", 175 },
+  { "death-note-ryuk.txt", 175 },
+  { "baki-yujiro.txt", 174 },
+  { "kara-no-kyoukai-shiki.txt", 176 },
 }
 
 return {
@@ -15,31 +27,38 @@ return {
   opts = function()
     local dashboard = require "alpha.themes.dashboard"
     require "alpha.term"
+    require "math"
+
+    local button = dashboard.button
 
     dashboard.opts.opts.noautocmd = false
     dashboard.section.terminal.opts.redraw = true
+    math.randomseed(os.time())
     local idx = math.random(1, #ANIME)
     local info = ANIME[idx]
-    local path = os.getenv "LOCALAPPDATA" .. "\\nvim\\lua\\plugins\\banner\\"
+    local configDir = os.getenv "LOCALAPPDATA" .. "\\nvim"
+    local path = configDir .. "\\lua\\plugins\\ansiArt\\"
 
-    dashboard.section.terminal.command = path .. "rustyAscii.exe " .. path .. info[1] -- show.sh does the same thing
+    dashboard.section.terminal.command = path .. "rustyAscii.exe " .. path .. info[1]
     dashboard.section.terminal.width = info[2]
-    dashboard.section.terminal.height = info[3]
+    dashboard.section.terminal.height = 50
+
+    dashboard.leader = "␣"
+    dashboard.section.buttons.val = {
+        button("e", "x New File", "<cmd>ene <CR>"),
+        button("f", "x Find File", "<cmd>Telescope everything <CR>"),
+        button("c", "x Open Config", ":e $LOCALAPPDATA\\nvim\\init.lua | :silent cd %:p:h | split . | wincmd k <CR>"),
+        button("q", "x Quit", "<cmd>qa <CR>"),
+    }
 
     dashboard.opts.layout = {
+      { type = "padding", val = 2 },
       dashboard.section.terminal,
       { type = "padding", val = 2 },
       dashboard.section.buttons,
       dashboard.section.footer,
     }
 
-    -- no Idea how it works exaclty, try n error with distinguishable colors lol
-    dashboard.opts.layout = {
-      dashboard.section.terminal,
-      { type = "padding", val = 2 },
-      dashboard.section.buttons,
-      dashboard.section.footer,
-    }
     return dashboard
   end,
   config = function(_, opts)
@@ -58,21 +77,23 @@ return {
       end,
     })
 
-    -- Function to set linespace based on filetype
-    local function set_linespace()
+    local function setLaststatus()
       if vim.bo.filetype == "alpha" then
-        if vim.go.linespace == -4 then return end
-        vim.go.linespace = -4 -- Change this to your desired linespace value
+        if vim.opt.laststatus == 0 then return end
+        vim.opt.laststatus = 0
+        vim.g.neovide_scale_factor = 0.75
       else
-        if vim.go.linespace == 0 then return end
-        vim.go.linespace = 0
+        if vim.opt.laststatus == 3 then return end
+        vim.opt.laststatus = 3
+        vim.g.neovide_scale_factor = 1
       end
     end
-    set_linespace()
+    setLaststatus()
     vim.api.nvim_create_autocmd("BufEnter", {
       pattern = "*",
-      callback = set_linespace,
+      desc = "Hide statusline in Alpha",
+      callback = setLaststatus,
     })
-  end,
+    end,
 }
 
